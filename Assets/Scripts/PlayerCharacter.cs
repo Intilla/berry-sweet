@@ -1,18 +1,23 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.Events;
+using UnityEngine.UI;
 
 [RequireComponent(typeof(Animator), typeof(SpriteRenderer), typeof(AudioSource))]
 public class PlayerCharacter : MonoBehaviour
 {
     private PlayerInput playerInput;
     private InputAction moveAction;
+    private InputAction runAction; 
     private Animator animator;
     private SpriteRenderer spriteRenderer;
     private AudioSource audioSource;
+    private float staminaCooldownTimer; 
+
 
     [Header("Movement")]
-    public float speed = 3f;
+    public float walkSpeed = 3f; 
+    public float runSpeed = 5f;   
     private Vector2 move;
     private Vector2 lastMoveDir = Vector2.down; 
 
@@ -28,19 +33,34 @@ public class PlayerCharacter : MonoBehaviour
     public AudioClip bankBasketSound;  
     public AudioClip loseBasketSound; 
 
+ [Header("Stamina")] 
+public float maxStamina = 100f;
+public float staminaDrainPerSecond = 20f;
+public float staminaRegenPerSecond = 10f;
+public float staminaRegenDelay = 2f; 
+public Slider staminaBar; 
+
+    private float currentStamina;
+    private bool isRunning;
+
     void Awake()
     {
         playerInput = GetComponent<PlayerInput>();
         moveAction = playerInput.actions["Move"];
+        runAction = playerInput.actions["Run"]; 
         animator = GetComponent<Animator>();
         spriteRenderer = GetComponent<SpriteRenderer>();
-        audioSource = GetComponent<AudioSource>(); // 🎵
+        audioSource = GetComponent<AudioSource>();
+
+        currentStamina = maxStamina; 
+        UpdateStaminaUI(); 
     }
 
     void Update()
     {
         move = moveAction.ReadValue<Vector2>();
         bool isMoving = move.sqrMagnitude > 0.01f;
+        isRunning = runAction.IsPressed() && currentStamina > 0f; 
 
         if (isMoving)
         {
@@ -58,14 +78,63 @@ public class PlayerCharacter : MonoBehaviour
         animator.SetFloat("LastMoveY", lastMoveDir.y);
         animator.SetBool("IsMoving", isMoving);
 
+        HandleStamina(isMoving);
+
+        float baseSpeed = isRunning ? runSpeed : walkSpeed;
         float slowFactor = 0.02f;
-        float targetSpeed = Mathf.Max(1.5f, speed - berriesCarried * slowFactor);
-        float currentSpeed = Mathf.Lerp(speed, targetSpeed, 0.5f);
+        float targetSpeed = Mathf.Max(1.5f, baseSpeed - berriesCarried * slowFactor);
+        float currentSpeed = Mathf.Lerp(baseSpeed, targetSpeed, 0.5f);
         transform.position += (Vector3)(move * currentSpeed * Time.deltaTime);
 
         if (Mathf.Abs(move.x) > 0.01f)
             spriteRenderer.flipX = move.x > 0;
     }
+
+    void HandleStamina(bool isMoving)
+    {
+        if (isRunning && isMoving)
+        {
+            currentStamina -= staminaDrainPerSecond * Time.deltaTime;
+            staminaCooldownTimer = staminaRegenDelay;
+        }
+        else
+        {
+            if (staminaCooldownTimer > 0f)
+            {
+                staminaCooldownTimer -= Time.deltaTime;
+            }
+            else
+            {
+                currentStamina += staminaRegenPerSecond * Time.deltaTime;
+            }
+        }
+
+        currentStamina = Mathf.Clamp(currentStamina, 0f, maxStamina);
+        UpdateStaminaUI();
+    }
+
+    void UpdateStaminaUI()
+    {
+    if (!staminaBar) return;
+
+    float normalized = currentStamina / maxStamina;
+    staminaBar.value = normalized;
+
+    bool showBar = isRunning && normalized > 0f;
+
+    CanvasGroup cg = staminaBar.GetComponentInParent<CanvasGroup>();
+        if (cg)
+        {
+            float targetAlpha = showBar ? 1f : 0f;
+            cg.alpha = Mathf.MoveTowards(cg.alpha, targetAlpha, Time.deltaTime * 6f);
+        }
+        else
+        {
+            staminaBar.gameObject.SetActive(showBar);
+        }
+    }
+
+
 
     public void AddBerry(int amount = 1)
     {
