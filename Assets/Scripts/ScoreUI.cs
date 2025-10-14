@@ -1,90 +1,136 @@
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
+using System.Collections;
 
 public class ScoreUI : MonoBehaviour
 {
-    public enum ScoreMode
-    {
-        GlobalScore,
-        CarriedBerries
-    }
+    [Header("References")]
+    public PlayerCharacter player;
 
-    [Header("Setup")]
-    public TextMeshProUGUI label;
-    public ScoreMode mode = ScoreMode.GlobalScore; // choose in Inspector
-    public PlayerCharacter player; // only used for berry mode
+    [Header("Labels")]
+    public TextMeshProUGUI berriesLabel;
+    public TextMeshProUGUI coinsLabel;
+
+    [Header("Basket Sprite (optional)")]
+    public Image basketImage;
+    public Sprite emptyBasketSprite;
+    public Sprite fullBasketSprite;
+
+    private Coroutine coinsCoroutine;
+
+    private float lastPopTime;
+    private float popCooldown = 0.2f;
+
+    private Vector3 originalBerriesScale;
+    private Vector3 originalCoinsScale;
 
     void Awake()
     {
-        if (!label) label = GetComponent<TextMeshProUGUI>();
-        if (!player && mode == ScoreMode.CarriedBerries)
+        if (!player)
             player = FindFirstObjectByType<PlayerCharacter>();
+
+        if (berriesLabel)
+            originalBerriesScale = berriesLabel.transform.localScale;
+
+        if (coinsLabel)
+            originalCoinsScale = coinsLabel.transform.localScale;
     }
 
     void OnEnable()
     {
-        // Initialize text
-        RefreshLabel();
+        RefreshLabels();
 
-        // Subscribe to relevant events
-        if (mode == ScoreMode.GlobalScore && ScoreManager.I)
-            ScoreManager.I.OnScoreChanged.AddListener(OnScoreChanged);
-
-        else if (mode == ScoreMode.CarriedBerries && player)
+        if (player)
+        {
             player.OnBerriesChanged.AddListener(OnBerriesChanged);
+            coinsCoroutine = StartCoroutine(UpdateCoinsLoop());
+        }
     }
 
     void OnDisable()
     {
-        if (mode == ScoreMode.GlobalScore && ScoreManager.I)
-            ScoreManager.I.OnScoreChanged.RemoveListener(OnScoreChanged);
-
-        else if (mode == ScoreMode.CarriedBerries && player)
+        if (player)
             player.OnBerriesChanged.RemoveListener(OnBerriesChanged);
+
+        if (coinsCoroutine != null)
+            StopCoroutine(coinsCoroutine);
     }
 
-    // Update when global score changes
-    void OnScoreChanged(int value)
-    {
-        label.text = $"{value}";
-        Pop();
-    }
-
-    // Update when carried berry count changes
     void OnBerriesChanged(int value)
     {
-        label.text = $"{value}";
-        Pop();
-    }
-
-    // Initial setup
-    void RefreshLabel()
-    {
-        if (mode == ScoreMode.GlobalScore)
-            label.text = $"{(ScoreManager.I ? ScoreManager.I.Score : 0)}";
-        else if (mode == ScoreMode.CarriedBerries && player)
-            label.text = $"{player.berriesCarried}";
-    }
-
-    // Little bounce animation
-    void Pop()
-    {
-        StopAllCoroutines();
-        StartCoroutine(PopRoutine());
-    }
-
-    System.Collections.IEnumerator PopRoutine()
-    {
-        var t = label.transform;
-        var s0 = t.localScale;
-        var s1 = s0 * 1.1f;
-        float a = 0;
-        while (a < 1)
+        if (berriesLabel)
         {
-            a += Time.unscaledDeltaTime * 10f;
-            t.localScale = Vector3.Lerp(s1, s0, a);
+            berriesLabel.text = $"{value}";
+            TryPop(berriesLabel.transform, originalBerriesScale);
+        }
+
+        if (basketImage)
+        {
+            basketImage.sprite = (value > 0) ? fullBasketSprite : emptyBasketSprite;
+            basketImage.enabled = true;
+        }
+    }
+
+    IEnumerator UpdateCoinsLoop()
+    {
+        int lastCoins = -1;
+        while (enabled && player)
+        {
+            if (player.totalCoins != lastCoins)
+            {
+                lastCoins = player.totalCoins;
+
+                if (coinsLabel)
+                {
+                    coinsLabel.text = $"{lastCoins}";
+                    TryPop(coinsLabel.transform, originalCoinsScale);
+                }
+            }
+            yield return new WaitForSeconds(0.2f);
+        }
+    }
+
+    void RefreshLabels()
+    {
+        if (!player) return;
+
+        if (berriesLabel)
+            berriesLabel.text = $"{player.berriesCarried}";
+        if (coinsLabel)
+            coinsLabel.text = $"{player.totalCoins}";
+    }
+
+    void TryPop(Transform target, Vector3 originalScale)
+    {
+        if (Time.unscaledTime - lastPopTime < popCooldown) return;
+        lastPopTime = Time.unscaledTime;
+        StartCoroutine(PopRoutine(target, originalScale));
+    }
+
+    IEnumerator PopRoutine(Transform target, Vector3 baseScale)
+    {
+        Vector3 s1 = baseScale * 1.1f;
+        float duration = 0.15f;
+
+        float a = 0f;
+        while (a < 1f)
+        {
+            a += Time.unscaledDeltaTime / duration;
+            target.localScale = Vector3.Lerp(baseScale, s1, a);
             yield return null;
         }
-        t.localScale = s0;
+
+        yield return new WaitForSecondsRealtime(0.05f);
+
+        a = 0f;
+        while (a < 1f)
+        {
+            a += Time.unscaledDeltaTime / duration;
+            target.localScale = Vector3.Lerp(s1, baseScale, a);
+            yield return null;
+        }
+
+        target.localScale = baseScale;
     }
 }

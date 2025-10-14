@@ -9,7 +9,7 @@ public class BaseZone : MonoBehaviour
             PlayerCharacter player = other.GetComponent<PlayerCharacter>();
             if (player != null)
             {
-                player.BankBerries();
+                player.SellBerries();
             }
         }
     }

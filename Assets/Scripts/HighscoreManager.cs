@@ -1,124 +1,138 @@
 using UnityEngine;
-using UnityEngine.UI;
-using TMPro;
+using UnityEngine.Networking;
+using System.Collections;
 using System.Collections.Generic;
 using System.Text;
+using TMPro;
+using UnityEngine.UI;
 
 public class HighscoreManager : MonoBehaviour
 {
     [Header("UI")]
-    public TMP_Text resultText;
     public TMP_InputField nameInput;
     public TMP_Text leaderboardText;
+    public TMP_Text statusText;
     public Button submitButton;
 
-    private int totalBerries;
-    private string basketInfo;
+    [Header("Server Settings")]
+    public string baseUrl = "https://intilla.se/berry-sweet/"; 
+    public string secretKey = "OtterPower123"; 
 
-    [System.Serializable]
-    public class HighscoreEntry
+    private void OnEnable()
     {
-        public string name;
-        public int berries;
+        StartCoroutine(FetchHighscores());
     }
 
-    private List<HighscoreEntry> highscores = new();
-
-    private const string PREF_KEY = "LocalHighscores";
-
-    void Start()
+    private void Start()
     {
-        basketInfo = PlayerPrefs.GetString("BerriesPerBasket", "");
-
-        if (string.IsNullOrEmpty(basketInfo))
-            basketInfo = "0";
-
-        string[] basketArray = basketInfo.Split(',');
-        int filled = basketArray.Length;
-        totalBerries = 0;
-
-        foreach (var b in basketArray)
-            if (int.TryParse(b, out int berries))
-                totalBerries += berries;
-
-        resultText.text =
-            $"Game Over!\n\n" +
-            $"Filled Baskets: {filled}\n" +
-            $"Total Berries: {totalBerries}";
-
+        statusText.text = "Loading leaderboard...";
         submitButton.onClick.AddListener(OnSubmit);
 
-        LoadHighscores();
-        DisplayHighscores();
+        StartCoroutine(FetchHighscores());
     }
 
-    void OnSubmit()
+    public void OnSubmit()
     {
         string playerName = nameInput.text.Trim();
         if (string.IsNullOrEmpty(playerName))
             playerName = "Anonymous";
 
-        AddHighscore(playerName, totalBerries);
-        DisplayHighscores();
-
-        submitButton.interactable = false;
-        leaderboardText.text = "Saved score!\n\n" + leaderboardText.text;
-    }
-
-    void AddHighscore(string name, int berries)
-    {
-        highscores.Add(new HighscoreEntry { name = name, berries = berries });
-        highscores.Sort((a, b) => b.berries.CompareTo(a.berries)); 
-
-        if (highscores.Count > 10)
-            highscores = highscores.GetRange(0, 10);
-
-        SaveHighscores();
-    }
-
-    void SaveHighscores()
-    {
-        StringBuilder sb = new();
-        foreach (var entry in highscores)
-            sb.AppendLine($"{entry.name}|{entry.berries}");
-
-        PlayerPrefs.SetString(PREF_KEY, sb.ToString());
-        PlayerPrefs.Save();
-    }
-
-    void LoadHighscores()
-    {
-        highscores.Clear();
-
-        string raw = PlayerPrefs.GetString(PREF_KEY, "");
-        if (string.IsNullOrEmpty(raw)) return;
-
-        string[] lines = raw.Split('\n');
-        foreach (var line in lines)
+        int money = PlayerPrefs.GetInt("LastMoney", 0);
+        if (money <= 0)
         {
-            if (string.IsNullOrWhiteSpace(line)) continue;
-            string[] parts = line.Split('|');
-            if (parts.Length < 2) continue;
-            if (int.TryParse(parts[1], out int berries))
-                highscores.Add(new HighscoreEntry { name = parts[0], berries = berries });
-        }
-    }
-
-    void DisplayHighscores()
-    {
-        if (highscores.Count == 0)
-        {
-            leaderboardText.text = "No highscores yet!";
+            statusText.text = "You have no earnings to submit!";
             return;
         }
 
-        StringBuilder sb = new();
-        for (int i = 0; i < highscores.Count; i++)
+        StartCoroutine(UploadScore(playerName, money));
+    }
+
+    private IEnumerator UploadScore(string playerName, int money)
+    {
+        statusText.text = "Uploading...";
+
+        ScoreEntry entry = new ScoreEntry(playerName, money);
+        string json = JsonUtility.ToJson(entry);
+        string url = baseUrl + "save.php?key=" + secretKey;
+
+        UnityWebRequest www = new UnityWebRequest(url, "POST");
+        byte[] bodyRaw = Encoding.UTF8.GetBytes(json);
+        www.uploadHandler = new UploadHandlerRaw(bodyRaw);
+        www.downloadHandler = new DownloadHandlerBuffer();
+        www.SetRequestHeader("Content-Type", "application/json");
+
+        yield return www.SendWebRequest();
+
+        if (www.result != UnityWebRequest.Result.Success)
         {
-            var e = highscores[i];
-            sb.AppendLine($"{i + 1}. {e.name} — {e.berries} berries");
+            Debug.LogError("Upload failed: " + www.error);
+            statusText.text = "Upload failed";
+        }
+        else
+        {
+            Debug.Log("Upload success: " + www.downloadHandler.text);
+            statusText.text = "Uploaded!";
+
+            StartCoroutine(FetchHighscores());
+        }
+    }
+
+    private IEnumerator FetchHighscores()
+    {
+        leaderboardText.text = "Loading highscores...";
+
+        string url = baseUrl + "load.php";
+        UnityWebRequest www = UnityWebRequest.Get(url);
+        www.downloadHandler = new DownloadHandlerBuffer();
+
+        yield return www.SendWebRequest();
+
+        if (www.result != UnityWebRequest.Result.Success)
+        {
+            Debug.LogError("Failed to fetch highscores: " + www.error);
+            leaderboardText.text = "Error loading highscores";
+            yield break;
         }
 
-        leaderboardText.text = "Highscores:\n\n" + sb.ToString();
+        string json = www.downloadHandler.text;
+        Debug.Log("Data received: " + json);
+
+        HighscoreList list = JsonUtility.FromJson<HighscoreList>(json);
+
+        if (list == null || list.highscores == null || list.highscores.Count == 0)
+        {
+            leaderboardText.text = "No highscores yet.";
+            statusText.text = "Leaderboard empty";
+            yield break;
+        }
+
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < list.highscores.Count; i++)
+        {
+            var entry = list.highscores[i];
+            sb.AppendLine($"{i + 1}. {entry.name} — {entry.score} coins");
+        }
+
+        leaderboardText.text = sb.ToString();
+        statusText.text = "Leaderboard updated";
+    }
+
+    [System.Serializable]
+    public class ScoreEntry
+    {
+        public string name;
+        public int score;
+
+        public ScoreEntry(string name, int score)
+        {
+            this.name = name;
+            this.score = score;
+        }
+    }
+
+    [System.Serializable]
+    public class HighscoreList
+    {
+        public List<ScoreEntry> highscores;
     }
 }
