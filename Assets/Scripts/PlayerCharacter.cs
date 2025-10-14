@@ -70,7 +70,12 @@ public class PlayerCharacter : MonoBehaviour
         currentStamina = maxStamina;
         UpdateStaminaUI();
 
-        lives = PlayerPrefs.GetInt("PlayerLives", maxLives);
+
+
+        lives = maxLives;
+        PlayerPrefs.SetInt("PlayerLives", lives);
+        PlayerPrefs.Save();
+        
         OnLivesChanged.Invoke(lives);
     }
 

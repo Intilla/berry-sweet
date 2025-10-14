@@ -8,9 +8,16 @@ public class BaseZone : MonoBehaviour
         {
             PlayerCharacter player = other.GetComponent<PlayerCharacter>();
             if (player != null)
-            {
                 player.SellBerries();
+
+            MotherBearBehaviour[] bears = Object.FindObjectsByType<MotherBearBehaviour>(FindObjectsSortMode.None);
+            foreach (var bear in bears)
+            {
+                if (bear != null && bear.isActiveAndEnabled)
+                    bear.StartCoroutine(bear.CalmDown());
             }
+
+            Debug.Log($"🐻‍❄️ Calmed down {bears.Length} bears!");
         }
     }
 }
