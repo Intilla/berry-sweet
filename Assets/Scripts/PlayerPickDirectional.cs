@@ -13,21 +13,18 @@ public class PlayerPickDirectional : MonoBehaviour
 
     private InputAction move;
     private InputAction pick;
-    private PlayerCharacter player; // 👈 reference to your inventory
+    private PlayerCharacter player;
 
     void Awake()
     {
         move = playerInput.actions[moveActionName];
         pick = playerInput.actions[pickActionName];
-        player = GetComponent<PlayerCharacter>(); // 👈 get reference
+        player = GetComponent<PlayerCharacter>();
     }
 
     void Update()
     {
-        // only trigger if pick button pressed this frame
         if (!pick.WasPressedThisFrame()) return;
-
-        // use current movement direction to decide which grid cell to check
         Vector2 i = move.ReadValue<Vector2>();
         if (i.magnitude < dirDeadzone) return;
 
@@ -44,13 +41,10 @@ public class PlayerPickDirectional : MonoBehaviour
 
         if (hit && hit.TryGetComponent(out BerryPile pile) && pile.TryPick())
         {
-            // 🫐 Add to player's carried berries instead of global score
             if (player != null)
                 player.AddBerry(1);
 
-            // 💥 Optional effects / feedback
             BerryFX.PopAt(hit.transform);
-            Debug.Log($"Picked 1 {pile.typeId}, left {pile.berries}, carrying {player.berriesCarried}");
         }
     }
 }

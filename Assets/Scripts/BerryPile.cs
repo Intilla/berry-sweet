@@ -52,8 +52,12 @@ public class BerryPile : MonoBehaviour
 
 public bool IsAvailable(string requester)
 {
+    if (requester == "Player") 
+        return berries > 0;
+
     return berries > 0 && (string.IsNullOrEmpty(reservedBy) || reservedBy == requester);
 }
+
 
 public bool TryReserve(string requester)
 {
@@ -78,7 +82,6 @@ public void Unreserve(string requester)
 
         if (berries <= 0)
         {
-            Debug.Log($"[{name}] emptied → start regrow timer");
             reservedBy = null;
             if (triggerCol) triggerCol.enabled = false;
             if (hideWhenEmpty) SetPipsVisible(false);
@@ -100,8 +103,6 @@ public void Unreserve(string requester)
         UpdateVisual();
         if (triggerCol) triggerCol.enabled = true;
         isRegrowing = false;
-
-        Debug.Log($"[{name}] regrew → {berries} berries");
     }
 
 

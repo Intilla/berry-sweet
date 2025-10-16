@@ -16,8 +16,6 @@ public class BaseZone : MonoBehaviour
                 if (bear != null && bear.isActiveAndEnabled)
                     bear.StartCoroutine(bear.CalmDown());
             }
-
-            Debug.Log($"🐻‍❄️ Calmed down {bears.Length} bears!");
         }
     }
 }

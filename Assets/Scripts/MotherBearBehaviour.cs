@@ -7,7 +7,7 @@ public class MotherBearBehaviour : MonoBehaviour
     [Header("Sprites")]
     public Sprite idleSprite;
     public Sprite roarSprite;
-    public Sprite walkSprite;
+    public Sprite[] walkSprites;
     public Sprite attackSprite;
     public Sprite afterAttackSprite;
 
@@ -16,6 +16,9 @@ public class MotherBearBehaviour : MonoBehaviour
     public AudioClip stepSound;
     public AudioClip attackSound;
     public float stepSoundInterval = 0.5f;
+
+    [Header("Animation")]
+    public float walkFrameRate = 0.15f;
 
     [Header("Settings")]
     public float roarDuration = 1.5f;
@@ -34,11 +37,21 @@ public class MotherBearBehaviour : MonoBehaviour
     private bool isChasing;
     private bool hasAttacked;
     private float stepTimer;
+    public static bool IsActive = false;
 
     [HideInInspector] public bool playerInBaseZone = false;
 
+    private Coroutine walkAnimRoutine;
+
     void Awake()
     {
+        if (IsActive)
+        {
+            Destroy(gameObject);
+            return;
+        }
+
+        IsActive = true;
         sr = GetComponent<SpriteRenderer>();
         audioSource = GetComponent<AudioSource>();
         if (!audioSource)
@@ -60,24 +73,23 @@ public class MotherBearBehaviour : MonoBehaviour
     {
         sr.sprite = roarSprite;
         if (roarSound) audioSource.PlayOneShot(roarSound);
-        Debug.Log("🐻‍❄️ Mother Bear ROARS!");
 
         yield return new WaitForSeconds(roarDuration);
 
         isChasing = true;
-        sr.sprite = walkSprite;
+        StartWalkAnimation();
     }
 
     void Update()
     {
-        // ✅ Stop chasing if player enters BaseZone
         if (playerInBaseZone)
         {
             if (isChasing)
             {
                 isChasing = false;
+                StopWalkAnimation();
                 sr.sprite = idleSprite;
-                Debug.Log("🐻‍❄️ Mother Bear stopped chasing — player is in BaseZone!");
+                StartCoroutine(CalmDown());
             }
             return;
         }
@@ -101,14 +113,20 @@ public class MotherBearBehaviour : MonoBehaviour
         }
     }
 
+    void OnDestroy()
+    {
+        if (IsActive)
+            IsActive = false;
+    }
+
     IEnumerator AttackPlayer()
     {
         hasAttacked = true;
         isChasing = false;
+        StopWalkAnimation();
 
         sr.sprite = attackSprite ? attackSprite : roarSprite;
         if (attackSound) audioSource.PlayOneShot(attackSound);
-        Debug.Log("🐻‍❄️ Mother Bear attacks!");
 
         if (!playerInBaseZone)
         {
@@ -120,28 +138,52 @@ public class MotherBearBehaviour : MonoBehaviour
         yield return new WaitForSeconds(attackCooldown);
 
         sr.sprite = afterAttackSprite ? afterAttackSprite : idleSprite;
-        Debug.Log("🐻‍❄️ Mother Bear calms down...");
 
         yield return new WaitForSeconds(afterAttackDuration);
 
-        Debug.Log("🐻‍❄️ Mother Bear disappears.");
         Destroy(gameObject);
     }
 
-    // ✅ Separate coroutine for calm down
     public IEnumerator CalmDown()
     {
-        StopAllCoroutines(); // stop any roar/chase/attack coroutine
         isChasing = false;
-        hasAttacked = false;
+        hasAttacked = true;
+        StopWalkAnimation();
 
         sr.sprite = afterAttackSprite ? afterAttackSprite : idleSprite;
-        Debug.Log("🐻‍❄️ Mother Bear calms down (triggered by BaseZone).");
 
         yield return new WaitForSeconds(afterCalmDownDuration);
 
-        Debug.Log("🐻‍❄️ Mother Bear disappears (after calm).");
         Destroy(gameObject);
+    }
+
+    IEnumerator AnimateWalk()
+    {
+        int frame = 0;
+        while (isChasing && walkSprites.Length > 0)
+        {
+            sr.sprite = walkSprites[frame];
+            frame = (frame + 1) % walkSprites.Length;
+            yield return new WaitForSeconds(walkFrameRate);
+        }
+    }
+
+    void StartWalkAnimation()
+    {
+        StopWalkAnimation();
+        if (walkSprites != null && walkSprites.Length > 0)
+            walkAnimRoutine = StartCoroutine(AnimateWalk());
+        else
+            sr.sprite = walkSprites.Length > 0 ? walkSprites[0] : idleSprite;
+    }
+
+    void StopWalkAnimation()
+    {
+        if (walkAnimRoutine != null)
+        {
+            StopCoroutine(walkAnimRoutine);
+            walkAnimRoutine = null;
+        }
     }
 
     void OnDrawGizmosSelected()

@@ -6,13 +6,13 @@ public class LivesUI : MonoBehaviour
 {
     [Header("References")]
     public PlayerCharacter player;
-    public Image[] heartImages;     // assign 3 Image components in order (left → right)
+    public Image[] heartImages;
     public Sprite fullHeart;
     public Sprite emptyHeart;
 
     [Header("Animation")]
-    public float popScale = 1.2f;   // how big the pop gets
-    public float popSpeed = 8f;     // how fast it pops
+    public float popScale = 1.2f;
+    public float popSpeed = 8f;
 
     private int lastLives = -1;
     private Coroutine updateRoutine;

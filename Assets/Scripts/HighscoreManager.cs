@@ -12,11 +12,13 @@ public class HighscoreManager : MonoBehaviour
     public TMP_InputField nameInput;
     public TMP_Text leaderboardText;
     public TMP_Text statusText;
+    public TMP_Text lastRunText;
     public Button submitButton;
+    public TMP_Text submitButtonText; 
 
     [Header("Server Settings")]
-    public string baseUrl = "https://intilla.se/berry-sweet/"; 
-    public string secretKey = "OtterPower123"; 
+    public string baseUrl = "https://intilla.se/berry-sweet/";
+    public string secretKey = "OtterPower123";
 
     private void OnEnable()
     {
@@ -27,6 +29,31 @@ public class HighscoreManager : MonoBehaviour
     {
         statusText.text = "Loading leaderboard...";
         submitButton.onClick.AddListener(OnSubmit);
+
+        int lastMoney = PlayerPrefs.GetInt("LastMoney", 0);
+        bool alreadySubmitted = PlayerPrefs.GetInt("ScoreSubmitted", 0) == 1; 
+
+        if (lastMoney > 0)
+        {
+            if (alreadySubmitted)
+            {
+                lastRunText.text = $"Last run you earned {lastMoney} coins.\n Already added to the leaderboard!";
+                submitButton.interactable = false; 
+                if (submitButtonText) submitButtonText.text = "SENT!";
+            }
+            else
+            {
+                lastRunText.text = $"Last run you earned {lastMoney} coins.\nWant to add it to the leaderboard?";
+                submitButton.interactable = true;
+                if (submitButtonText) submitButtonText.text = "Send"; 
+            }
+        }
+        else
+        {
+            lastRunText.text = "No coins from your last run yet!";
+            submitButton.interactable = false;
+            if (submitButtonText) submitButtonText.text = "Send";
+        }
 
         StartCoroutine(FetchHighscores());
     }
@@ -41,6 +68,15 @@ public class HighscoreManager : MonoBehaviour
         if (money <= 0)
         {
             statusText.text = "You have no earnings to submit!";
+            return;
+        }
+
+        bool alreadySubmitted = PlayerPrefs.GetInt("ScoreSubmitted", 0) == 1; 
+        if (alreadySubmitted)
+        {
+            statusText.text = "You already submitted your score!";
+            submitButton.interactable = false;
+            if (submitButtonText) submitButtonText.text = "SENT!";
             return;
         }
 
@@ -65,13 +101,17 @@ public class HighscoreManager : MonoBehaviour
 
         if (www.result != UnityWebRequest.Result.Success)
         {
-            Debug.LogError("Upload failed: " + www.error);
             statusText.text = "Upload failed";
         }
         else
         {
-            Debug.Log("Upload success: " + www.downloadHandler.text);
             statusText.text = "Uploaded!";
+            PlayerPrefs.SetInt("ScoreSubmitted", 1); 
+            PlayerPrefs.Save();
+
+            lastRunText.text = $"Your {money} coins were added to the leaderboard!";
+            submitButton.interactable = false; 
+            if (submitButtonText) submitButtonText.text = "SENT!";
 
             StartCoroutine(FetchHighscores());
         }
@@ -79,7 +119,7 @@ public class HighscoreManager : MonoBehaviour
 
     private IEnumerator FetchHighscores()
     {
-        leaderboardText.text = "Loading highscores...";
+        leaderboardText.text = "1.\n2.\n3.\n4.\n5.\n6.\n7.\n8.\n9.\n10.";
 
         string url = baseUrl + "load.php";
         UnityWebRequest www = UnityWebRequest.Get(url);
@@ -89,14 +129,11 @@ public class HighscoreManager : MonoBehaviour
 
         if (www.result != UnityWebRequest.Result.Success)
         {
-            Debug.LogError("Failed to fetch highscores: " + www.error);
             leaderboardText.text = "Error loading highscores";
             yield break;
         }
 
         string json = www.downloadHandler.text;
-        Debug.Log("Data received: " + json);
-
         HighscoreList list = JsonUtility.FromJson<HighscoreList>(json);
 
         if (list == null || list.highscores == null || list.highscores.Count == 0)

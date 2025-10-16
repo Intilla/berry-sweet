@@ -1,0 +1,964 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &-7142910584578580510
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2dd922ae02c94c87a66e46a10a7319b9, type: 3}
+  m_Name: BabyBearBehavior Blackboard
+  m_EditorClassIdentifier: Unity.Behavior.Authoring::Unity.Behavior.BehaviorBlackboardAuthoringAsset
+  AssetID:
+    m_Value0: 0
+    m_Value1: 0
+  m_Variables:
+  - rid: 8095726435397533939
+  - rid: 8095726435397533959
+  - rid: 8095726435397533997
+  - rid: 8095726435397534019
+  - rid: 8095726435397534043
+  - rid: 8095726435397534111
+  - rid: 8095726435397534138
+  - rid: 8095726435397534153
+  - rid: 8095726436717953139
+  - rid: 8095726436717953156
+  m_VersionTimestamp: 638960588411733036
+  m_CommandBuffer:
+    m_Commands: []
+  m_RuntimeBlackboardAsset: {fileID: -3448803690992842741}
+  references:
+    version: 2
+    RefIds:
+    - rid: 8095726435397533939
+      type: {class: 'TypedVariableModel`1[[UnityEngine.GameObject, UnityEngine.CoreModule]]', ns: Unity.Behavior.GraphFramework, asm: Unity.Behavior.GraphFramework}
+      data:
+        ID:
+          m_Value0: 1
+          m_Value1: 0
+        Name: Self
+        IsExposed: 1
+        m_IsShared: 0
+        m_Value: {fileID: 0}
+    - rid: 8095726435397533959
+      type: {class: 'TypedVariableModel`1[[UnityEngine.GameObject, UnityEngine.CoreModule]]', ns: Unity.Behavior.GraphFramework, asm: Unity.Behavior.GraphFramework}
+      data:
+        ID:
+          m_Value0: 11444107136684602940
+          m_Value1: 12050521291871718006
+        Name: Player
+        IsExposed: 1
+        m_IsShared: 0
+        m_Value: {fileID: 498128056000755525, guid: cb8ec9667befcf347b1588f329af02a2, type: 3}
+    - rid: 8095726435397533997
+      type: {class: 'TypedVariableModel`1[[System.String, mscorlib]]', ns: Unity.Behavior.GraphFramework, asm: Unity.Behavior.GraphFramework}
+      data:
+        ID:
+          m_Value0: 7949777229394215332
+          m_Value1: 10292995532286368986
+        Name: berryPileTag
+        IsExposed: 1
+        m_IsShared: 0
+        m_Value: BerryPile
+    - rid: 8095726435397534019
+      type: {class: 'TypedVariableModel`1[[UnityEngine.GameObject, UnityEngine.CoreModule]]', ns: Unity.Behavior.GraphFramework, asm: Unity.Behavior.GraphFramework}
+      data:
+        ID:
+          m_Value0: 15378281002367400688
+          m_Value1: 18131803166233796608
+        Name: motherBearPrefab
+        IsExposed: 1
+        m_IsShared: 0
+        m_Value: {fileID: 5504280375188448575, guid: ea44c95844a39374ab38856cf1a06d9e, type: 3}
+    - rid: 8095726435397534043
+      type: {class: 'TypedVariableModel`1[[System.Single, mscorlib]]', ns: Unity.Behavior.GraphFramework, asm: Unity.Behavior.GraphFramework}
+      data:
+        ID:
+          m_Value0: 9540583445009536211
+          m_Value1: 15241010411053481390
+        Name: moveSpeed
+        IsExposed: 1
+        m_IsShared: 0
+        m_Value: 1.5
+    - rid: 8095726435397534111
+      type: {class: 'TypedVariableModel`1[[System.Boolean, mscorlib]]', ns: Unity.Behavior.GraphFramework, asm: Unity.Behavior.GraphFramework}
+      data:
+        ID:
+          m_Value0: 3888791166418612019
+          m_Value1: 16842300062764820833
+        Name: PlayerInSight
+        IsExposed: 1
+        m_IsShared: 0
+        m_Value: 0
+    - rid: 8095726435397534138
+      type: {class: 'TypedVariableModel`1[[UnityEngine.Vector2, UnityEngine.CoreModule]]', ns: Unity.Behavior.GraphFramework, asm: Unity.Behavior.GraphFramework}
+      data:
+        ID:
+          m_Value0: 4272343306162349908
+          m_Value1: 2974116293066530498
+        Name: roamMin
+        IsExposed: 1
+        m_IsShared: 0
+        m_Value: {x: 0, y: 0}
+    - rid: 8095726435397534153
+      type: {class: 'TypedVariableModel`1[[UnityEngine.Vector2, UnityEngine.CoreModule]]', ns: Unity.Behavior.GraphFramework, asm: Unity.Behavior.GraphFramework}
+      data:
+        ID:
+          m_Value0: 6496240575930626714
+          m_Value1: 2834263462767354787
+        Name: roamMax
+        IsExposed: 1
+        m_IsShared: 0
+        m_Value: {x: 0, y: 0}
+    - rid: 8095726436717953139
+      type: {class: 'TypedVariableModel`1[[BabyBearBehaviour, Assembly-CSharp]]', ns: Unity.Behavior.GraphFramework, asm: Unity.Behavior.GraphFramework}
+      data:
+        ID:
+          m_Value0: 2941018089043878999
+          m_Value1: 11092761706046657809
+        Name: bearRef
+        IsExposed: 1
+        m_IsShared: 0
+        m_Value: {fileID: 0}
+    - rid: 8095726436717953156
+      type: {class: 'TypedVariableModel`1[[BerryPile, Assembly-CSharp]]', ns: Unity.Behavior.GraphFramework, asm: Unity.Behavior.GraphFramework}
+      data:
+        ID:
+          m_Value0: 13804736833538464525
+          m_Value1: 14943211907403898628
+        Name: targetPile
+        IsExposed: 1
+        m_IsShared: 0
+        m_Value: {fileID: 0}
+--- !u!114 &-6768786435319877244
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5b27bb6d9a2c8d540a10dff10acc543e, type: 3}
+  m_Name: BabyBearBehavior Debug Info
+  m_EditorClassIdentifier: Unity.Behavior::Unity.Behavior.BehaviorGraphDebugInfo
+  m_CodeBreakPointsList: []
+--- !u!114 &-6407634550916498716
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: db920e62f70f420bb33c771449926fa4, type: 3}
+  m_Name: BabyBearBehavior
+  m_EditorClassIdentifier: Unity.Behavior::Unity.Behavior.BehaviorGraph
+  Graphs:
+  - rid: 8095726436717953266
+  RootGraph:
+    rid: 8095726436717953266
+  m_DebugInfo: {fileID: -6768786435319877244}
+  references:
+    version: 2
+    RefIds:
+    - rid: -2
+      type: {class: , ns: , asm: }
+    - rid: 8095726436717953266
+      type: {class: BehaviorGraphModule, ns: Unity.Behavior, asm: Unity.Behavior}
+      data:
+        AuthoringAssetID:
+          m_Value0: 11829760926541396898
+          m_Value1: 1414527367809308171
+        m_DebugInfo: {fileID: 0}
+        BlackboardReference:
+          rid: 8095726436717953267
+        BlackboardGroupReferences: []
+        Root:
+          rid: 8095726436717953268
+        m_ActiveNodes: []
+        m_NodesToTick: []
+        m_NodesToEnd:
+          rid: 8095726436717953269
+        m_EndedNodes:
+          rid: 8095726436717953270
+        m_VersionTimestamp: 638960588493834473
+    - rid: 8095726436717953267
+      type: {class: BlackboardReference, ns: Unity.Behavior, asm: Unity.Behavior}
+      data:
+        m_Blackboard:
+          rid: 8095726436717953271
+        m_Source: {fileID: -3448803690992842741}
+    - rid: 8095726436717953268
+      type: {class: Start, ns: Unity.Behavior, asm: Unity.Behavior}
+      data:
+        ID:
+          m_Value0: 12115142338893349314
+          m_Value1: 695952326421742925
+        Graph:
+          rid: 8095726436717953266
+        m_Parent:
+          rid: -2
+        m_Child:
+          rid: -2
+        Repeat: 1
+        AllowMultipleRepeatsPerTick: 0
+    - rid: 8095726436717953269
+      type: {class: 'Stack`1[[Unity.Behavior.Node, Unity.Behavior]]', ns: System.Collections.Generic, asm: mscorlib}
+      data: 
+    - rid: 8095726436717953270
+      type: {class: 'HashSet`1[[Unity.Behavior.Node, Unity.Behavior]]', ns: System.Collections.Generic, asm: System.Core}
+      data: 
+    - rid: 8095726436717953271
+      type: {class: Blackboard, ns: Unity.Behavior, asm: Unity.Behavior}
+      data:
+        m_Variables:
+        - rid: 8095726436717953272
+        - rid: 8095726436717953273
+        - rid: 8095726436717953274
+        - rid: 8095726436717953275
+        - rid: 8095726436717953276
+        - rid: 8095726436717953277
+        - rid: 8095726436717953278
+        - rid: 8095726436717953279
+        - rid: 8095726436717953280
+        - rid: 8095726436717953281
+    - rid: 8095726436717953272
+      type: {class: 'BlackboardVariable`1[[UnityEngine.GameObject, UnityEngine.CoreModule]]', ns: Unity.Behavior, asm: Unity.Behavior}
+      data:
+        GUID:
+          m_Value0: 1
+          m_Value1: 0
+        Name: Self
+        m_Value: {fileID: 0}
+    - rid: 8095726436717953273
+      type: {class: 'BlackboardVariable`1[[UnityEngine.GameObject, UnityEngine.CoreModule]]', ns: Unity.Behavior, asm: Unity.Behavior}
+      data:
+        GUID:
+          m_Value0: 11444107136684602940
+          m_Value1: 12050521291871718006
+        Name: Player
+        m_Value: {fileID: 498128056000755525, guid: cb8ec9667befcf347b1588f329af02a2, type: 3}
+    - rid: 8095726436717953274
+      type: {class: 'BlackboardVariable`1[[System.String, mscorlib]]', ns: Unity.Behavior, asm: Unity.Behavior}
+      data:
+        GUID:
+          m_Value0: 7949777229394215332
+          m_Value1: 10292995532286368986
+        Name: berryPileTag
+        m_Value: BerryPile
+    - rid: 8095726436717953275
+      type: {class: 'BlackboardVariable`1[[UnityEngine.GameObject, UnityEngine.CoreModule]]', ns: Unity.Behavior, asm: Unity.Behavior}
+      data:
+        GUID:
+          m_Value0: 15378281002367400688
+          m_Value1: 18131803166233796608
+        Name: motherBearPrefab
+        m_Value: {fileID: 5504280375188448575, guid: ea44c95844a39374ab38856cf1a06d9e, type: 3}
+    - rid: 8095726436717953276
+      type: {class: 'BlackboardVariable`1[[System.Single, mscorlib]]', ns: Unity.Behavior, asm: Unity.Behavior}
+      data:
+        GUID:
+          m_Value0: 9540583445009536211
+          m_Value1: 15241010411053481390
+        Name: moveSpeed
+        m_Value: 1.5
+    - rid: 8095726436717953277
+      type: {class: 'BlackboardVariable`1[[System.Boolean, mscorlib]]', ns: Unity.Behavior, asm: Unity.Behavior}
+      data:
+        GUID:
+          m_Value0: 3888791166418612019
+          m_Value1: 16842300062764820833
+        Name: PlayerInSight
+        m_Value: 0
+    - rid: 8095726436717953278
+      type: {class: 'BlackboardVariable`1[[UnityEngine.Vector2, UnityEngine.CoreModule]]', ns: Unity.Behavior, asm: Unity.Behavior}
+      data:
+        GUID:
+          m_Value0: 4272343306162349908
+          m_Value1: 2974116293066530498
+        Name: roamMin
+        m_Value: {x: 0, y: 0}
+    - rid: 8095726436717953279
+      type: {class: 'BlackboardVariable`1[[UnityEngine.Vector2, UnityEngine.CoreModule]]', ns: Unity.Behavior, asm: Unity.Behavior}
+      data:
+        GUID:
+          m_Value0: 6496240575930626714
+          m_Value1: 2834263462767354787
+        Name: roamMax
+        m_Value: {x: 0, y: 0}
+    - rid: 8095726436717953280
+      type: {class: 'BlackboardVariable`1[[BabyBearBehaviour, Assembly-CSharp]]', ns: Unity.Behavior, asm: Unity.Behavior}
+      data:
+        GUID:
+          m_Value0: 2941018089043878999
+          m_Value1: 11092761706046657809
+        Name: bearRef
+        m_Value: {fileID: 0}
+    - rid: 8095726436717953281
+      type: {class: 'BlackboardVariable`1[[BerryPile, Assembly-CSharp]]', ns: Unity.Behavior, asm: Unity.Behavior}
+      data:
+        GUID:
+          m_Value0: 13804736833538464525
+          m_Value1: 14943211907403898628
+        Name: targetPile
+        m_Value: {fileID: 0}
+--- !u!114 &-3448803690992842741
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5c02bb70996b49eba31d0c206e28da24, type: 3}
+  m_Name: BabyBearBehavior Blackboard
+  m_EditorClassIdentifier: Unity.Behavior::Unity.Behavior.RuntimeBlackboardAsset
+  VersionTimestamp: 638960588411733036
+  AssetID:
+    m_Value0: 0
+    m_Value1: 0
+  m_Blackboard:
+    m_Variables:
+    - rid: 8095726435397533947
+    - rid: 8095726435397533968
+    - rid: 8095726435397534008
+    - rid: 8095726435397534031
+    - rid: 8095726435397534058
+    - rid: 8095726435397534125
+    - rid: 8095726435397534152
+    - rid: 8095726435397534168
+    - rid: 8095726436717953155
+    - rid: 8095726436717953173
+  m_SharedBlackboardVariableGuids: []
+  references:
+    version: 2
+    RefIds:
+    - rid: 8095726435397533947
+      type: {class: 'BlackboardVariable`1[[UnityEngine.GameObject, UnityEngine.CoreModule]]', ns: Unity.Behavior, asm: Unity.Behavior}
+      data:
+        GUID:
+          m_Value0: 1
+          m_Value1: 0
+        Name: Self
+        m_Value: {fileID: 0}
+    - rid: 8095726435397533968
+      type: {class: 'BlackboardVariable`1[[UnityEngine.GameObject, UnityEngine.CoreModule]]', ns: Unity.Behavior, asm: Unity.Behavior}
+      data:
+        GUID:
+          m_Value0: 11444107136684602940
+          m_Value1: 12050521291871718006
+        Name: Player
+        m_Value: {fileID: 498128056000755525, guid: cb8ec9667befcf347b1588f329af02a2, type: 3}
+    - rid: 8095726435397534008
+      type: {class: 'BlackboardVariable`1[[System.String, mscorlib]]', ns: Unity.Behavior, asm: Unity.Behavior}
+      data:
+        GUID:
+          m_Value0: 7949777229394215332
+          m_Value1: 10292995532286368986
+        Name: berryPileTag
+        m_Value: BerryPile
+    - rid: 8095726435397534031
+      type: {class: 'BlackboardVariable`1[[UnityEngine.GameObject, UnityEngine.CoreModule]]', ns: Unity.Behavior, asm: Unity.Behavior}
+      data:
+        GUID:
+          m_Value0: 15378281002367400688
+          m_Value1: 18131803166233796608
+        Name: motherBearPrefab
+        m_Value: {fileID: 5504280375188448575, guid: ea44c95844a39374ab38856cf1a06d9e, type: 3}
+    - rid: 8095726435397534058
+      type: {class: 'BlackboardVariable`1[[System.Single, mscorlib]]', ns: Unity.Behavior, asm: Unity.Behavior}
+      data:
+        GUID:
+          m_Value0: 9540583445009536211
+          m_Value1: 15241010411053481390
+        Name: moveSpeed
+        m_Value: 1.5
+    - rid: 8095726435397534125
+      type: {class: 'BlackboardVariable`1[[System.Boolean, mscorlib]]', ns: Unity.Behavior, asm: Unity.Behavior}
+      data:
+        GUID:
+          m_Value0: 3888791166418612019
+          m_Value1: 16842300062764820833
+        Name: PlayerInSight
+        m_Value: 0
+    - rid: 8095726435397534152
+      type: {class: 'BlackboardVariable`1[[UnityEngine.Vector2, UnityEngine.CoreModule]]', ns: Unity.Behavior, asm: Unity.Behavior}
+      data:
+        GUID:
+          m_Value0: 4272343306162349908
+          m_Value1: 2974116293066530498
+        Name: roamMin
+        m_Value: {x: 0, y: 0}
+    - rid: 8095726435397534168
+      type: {class: 'BlackboardVariable`1[[UnityEngine.Vector2, UnityEngine.CoreModule]]', ns: Unity.Behavior, asm: Unity.Behavior}
+      data:
+        GUID:
+          m_Value0: 6496240575930626714
+          m_Value1: 2834263462767354787
+        Name: roamMax
+        m_Value: {x: 0, y: 0}
+    - rid: 8095726436717953155
+      type: {class: 'BlackboardVariable`1[[BabyBearBehaviour, Assembly-CSharp]]', ns: Unity.Behavior, asm: Unity.Behavior}
+      data:
+        GUID:
+          m_Value0: 2941018089043878999
+          m_Value1: 11092761706046657809
+        Name: bearRef
+        m_Value: {fileID: 0}
+    - rid: 8095726436717953173
+      type: {class: 'BlackboardVariable`1[[BerryPile, Assembly-CSharp]]', ns: Unity.Behavior, asm: Unity.Behavior}
+      data:
+        GUID:
+          m_Value0: 13804736833538464525
+          m_Value1: 14943211907403898628
+        Name: targetPile
+        m_Value: {fileID: 0}
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bad8f2220607dac4db5082ff333fafb8, type: 3}
+  m_Name: BabyBearBehavior
+  m_EditorClassIdentifier: Unity.Behavior.Authoring::Unity.Behavior.BehaviorAuthoringGraph
+  Blackboard: {fileID: -7142910584578580510}
+  m_Description: 
+  m_Nodes:
+  - rid: 8095726435397533937
+  - rid: 8095726435397534226
+  - rid: 8095726435397534320
+  - rid: 8095726435397534710
+  - rid: 8095726436717953088
+  - rid: 8095726436717953091
+  m_VersionTimestamp: 638960588493834473
+  m_DebugInfo: {fileID: -6768786435319877244}
+  m_RuntimeGraph: {fileID: -6407634550916498716}
+  AssetID:
+    m_Value0: 11829760926541396898
+    m_Value1: 1414527367809308171
+  Story:
+    Story: 
+    StoryVariableNames: []
+    Variables: []
+  m_NodeModelsInfo:
+  - Name: On Start
+    Story: 
+    RuntimeTypeID:
+      m_Value0: 3335272451348827663
+      m_Value1: 11549843281177505721
+    Variables: []
+    NamedChildren: []
+  - Name: Main Routine
+    Story: 
+    RuntimeTypeID:
+      m_Value0: 15493671517928251214
+      m_Value1: 14954695382481710257
+    Variables: []
+    NamedChildren: []
+  - Name: Conditional Guard
+    Story: 
+    RuntimeTypeID:
+      m_Value0: 10845871997924083670
+      m_Value1: 4041440894818793834
+    Variables: []
+    NamedChildren: []
+  - Name: Find Closest BerryPile
+    Story: Find Closest Available BerryPile
+    RuntimeTypeID:
+      m_Value0: 5554548041219090039
+      m_Value1: 11379855387738914890
+    Variables:
+    - Name: targetPile
+      Type:
+        m_SerializableType: BerryPile, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+          PublicKeyToken=null
+      Tooltip: 
+    - Name: bearRef
+      Type:
+        m_SerializableType: BabyBearBehaviour, Assembly-CSharp, Version=0.0.0.0,
+          Culture=neutral, PublicKeyToken=null
+      Tooltip: 
+    NamedChildren: []
+  - Name: Walk To Pile
+    Story: Move towards the target berry pile
+    RuntimeTypeID:
+      m_Value0: 2684395710
+      m_Value1: 0
+    Variables:
+    - Name: bearRef
+      Type:
+        m_SerializableType: BabyBearBehaviour, Assembly-CSharp, Version=0.0.0.0,
+          Culture=neutral, PublicKeyToken=null
+      Tooltip: 
+    - Name: targetPile
+      Type:
+        m_SerializableType: BerryPile, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+          PublicKeyToken=null
+      Tooltip: 
+    NamedChildren: []
+  - Name: Walk To Pile
+    Story: Move the bear toward the target berry pile
+    RuntimeTypeID:
+      m_Value0: 3407791021749157439
+      m_Value1: 1358474770408959130
+    Variables: []
+    NamedChildren: []
+  - Name: Walk To Pile
+    Story: Move the bear toward the target berry pile
+    RuntimeTypeID:
+      m_Value0: 2906630721822350272
+      m_Value1: 16184382386970982380
+    Variables: []
+    NamedChildren: []
+  - Name: Call Method
+    Story: Call Method
+    RuntimeTypeID:
+      m_Value0: 2125941611648223417
+      m_Value1: 14353695756463595089
+    Variables: []
+    NamedChildren: []
+  - Name: Sequence
+    Story: 
+    RuntimeTypeID:
+      m_Value0: 10181448252506100447
+      m_Value1: 8737116843063128493
+    Variables: []
+    NamedChildren: []
+  m_Blackboards: []
+  m_MainBlackboardAuthoringAsset: {fileID: -7142910584578580510}
+  m_CommandBuffer:
+    m_Commands: []
+  m_SubgraphsInfo: []
+  references:
+    version: 2
+    RefIds:
+    - rid: -2
+      type: {class: , ns: , asm: }
+    - rid: 8095726435397533937
+      type: {class: StartNodeModel, ns: Unity.Behavior, asm: Unity.Behavior.Authoring}
+      data:
+        Position: {x: -80.800316, y: 5.6000004}
+        ID:
+          m_Value0: 12115142338893349314
+          m_Value1: 695952326421742925
+        Parents: []
+        PortModels:
+        - rid: 8095726435397533938
+        NodeType:
+          m_SerializableType: Unity.Behavior.Start, Unity.Behavior, Version=0.0.0.0,
+            Culture=neutral, PublicKeyToken=null
+        NodeTypeID:
+          m_Value0: 3335272451348827663
+          m_Value1: 11549843281177505721
+        m_FieldValues: []
+        Repeat: 1
+        AllowMultipleRepeatsPerTick: 0
+    - rid: 8095726435397533938
+      type: {class: PortModel, ns: Unity.Behavior.GraphFramework, asm: Unity.Behavior.GraphFramework}
+      data:
+        m_Name: OutputPort
+        m_PortDataFlowType: 1
+        m_IsFloating: 0
+        m_NodeModel:
+          rid: 8095726435397533937
+        m_Connections: []
+    - rid: 8095726435397534226
+      type: {class: CompositeNodeModel, ns: Unity.Behavior, asm: Unity.Behavior.Authoring}
+      data:
+        Position: {x: 83.50003, y: 74.50004}
+        ID:
+          m_Value0: 4692441166098690356
+          m_Value1: 8310133823159334218
+        Parents: []
+        PortModels:
+        - rid: 8095726435397534227
+        - rid: 8095726435397534228
+        NodeType:
+          m_SerializableType: MainRoutineSequence, Assembly-CSharp, Version=0.0.0.0,
+            Culture=neutral, PublicKeyToken=null
+        NodeTypeID:
+          m_Value0: 15493671517928251214
+          m_Value1: 14954695382481710257
+        m_FieldValues: []
+    - rid: 8095726435397534227
+      type: {class: PortModel, ns: Unity.Behavior.GraphFramework, asm: Unity.Behavior.GraphFramework}
+      data:
+        m_Name: InputPort
+        m_PortDataFlowType: 0
+        m_IsFloating: 0
+        m_NodeModel:
+          rid: 8095726435397534226
+        m_Connections: []
+    - rid: 8095726435397534228
+      type: {class: PortModel, ns: Unity.Behavior.GraphFramework, asm: Unity.Behavior.GraphFramework}
+      data:
+        m_Name: OutputPort
+        m_PortDataFlowType: 1
+        m_IsFloating: 0
+        m_NodeModel:
+          rid: 8095726435397534226
+        m_Connections:
+        - rid: 8095726435397534321
+    - rid: 8095726435397534320
+      type: {class: ConditionalGuardNodeModel, ns: Unity.Behavior, asm: Unity.Behavior.Authoring}
+      data:
+        Position: {x: 89.04979, y: 156.52496}
+        ID:
+          m_Value0: 6937767667146896933
+          m_Value1: 2903375814406549257
+        Parents: []
+        PortModels:
+        - rid: 8095726435397534321
+        - rid: 8095726435397534322
+        NodeType:
+          m_SerializableType: Unity.Behavior.ConditionalGuardAction, Unity.Behavior,
+            Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+        NodeTypeID:
+          m_Value0: 10845871997924083670
+          m_Value1: 4041440894818793834
+        m_FieldValues: []
+        <ConditionModels>k__BackingField:
+        - rid: 8095726435397534493
+        <RequiresAllConditionsTrue>k__BackingField: 0
+        <ShouldTruncateNodeUI>k__BackingField: 0
+    - rid: 8095726435397534321
+      type: {class: PortModel, ns: Unity.Behavior.GraphFramework, asm: Unity.Behavior.GraphFramework}
+      data:
+        m_Name: InputPort
+        m_PortDataFlowType: 0
+        m_IsFloating: 0
+        m_NodeModel:
+          rid: 8095726435397534320
+        m_Connections:
+        - rid: 8095726435397534228
+    - rid: 8095726435397534322
+      type: {class: PortModel, ns: Unity.Behavior.GraphFramework, asm: Unity.Behavior.GraphFramework}
+      data:
+        m_Name: OutputPort
+        m_PortDataFlowType: 1
+        m_IsFloating: 0
+        m_NodeModel:
+          rid: 8095726435397534320
+        m_Connections:
+        - rid: 8095726436717953092
+    - rid: 8095726435397534493
+      type: {class: ConditionModel, ns: Unity.Behavior, asm: Unity.Behavior.Authoring}
+      data:
+        ConditionType:
+          m_SerializableType: Unity.Behavior.VariableComparisonCondition, Unity.Behavior,
+            Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+        ConditionTypeID:
+          m_Value0: 4706153636540939941
+          m_Value1: 1154942553909992356
+        NodeModel:
+          rid: 8095726435397534320
+        m_FieldValues:
+        - rid: 8095726435397534494
+        - rid: 8095726435397534495
+        - rid: 8095726435397534531
+        OperatorFieldModel:
+          rid: 8095726435397534495
+    - rid: 8095726435397534494
+      type: {class: BehaviorGraphNodeModel/FieldModel, ns: Unity.Behavior, asm: Unity.Behavior.Authoring}
+      data:
+        FieldName: Variable
+        Type:
+          m_SerializableType: System.Object, mscorlib, Version=4.0.0.0, Culture=neutral,
+            PublicKeyToken=b77a5c561934e089
+        LocalValue:
+          rid: 8095726435397534532
+        LinkedVariable:
+          rid: 8095726435397534516
+    - rid: 8095726435397534495
+      type: {class: BehaviorGraphNodeModel/FieldModel, ns: Unity.Behavior, asm: Unity.Behavior.Authoring}
+      data:
+        FieldName: Operator
+        Type:
+          m_SerializableType: Unity.Behavior.ConditionOperator, Unity.Behavior, Version=0.0.0.0,
+            Culture=neutral, PublicKeyToken=null
+        LocalValue:
+          rid: 8095726435397534498
+        LinkedVariable:
+          rid: -2
+    - rid: 8095726435397534498
+      type: {class: 'BlackboardVariable`1[[Unity.Behavior.ConditionOperator, Unity.Behavior]]', ns: Unity.Behavior, asm: Unity.Behavior}
+      data:
+        GUID:
+          m_Value0: 0
+          m_Value1: 0
+        Name: 
+        m_Value: 0
+    - rid: 8095726435397534516
+      type: {class: 'TypedVariableModel`1[[System.Boolean, mscorlib]]', ns: Unity.Behavior.GraphFramework, asm: Unity.Behavior.GraphFramework}
+      data:
+        ID:
+          m_Value0: 3888791166418612019
+          m_Value1: 16842300062764820833
+        Name: PlayerInSight
+        IsExposed: 1
+        m_IsShared: 0
+        m_Value: 0
+    - rid: 8095726435397534531
+      type: {class: BehaviorGraphNodeModel/FieldModel, ns: Unity.Behavior, asm: Unity.Behavior.Authoring}
+      data:
+        FieldName: ComparisonValue
+        Type:
+          m_SerializableType: System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral,
+            PublicKeyToken=b77a5c561934e089
+        LocalValue:
+          rid: 8095726435397534533
+        LinkedVariable:
+          rid: -2
+    - rid: 8095726435397534532
+      type: {class: 'BlackboardVariable`1[[System.Boolean, mscorlib]]', ns: Unity.Behavior, asm: Unity.Behavior}
+      data:
+        GUID:
+          m_Value0: 0
+          m_Value1: 0
+        Name: 
+        m_Value: 0
+    - rid: 8095726435397534533
+      type: {class: 'BlackboardVariable`1[[System.Boolean, mscorlib]]', ns: Unity.Behavior, asm: Unity.Behavior}
+      data:
+        GUID:
+          m_Value0: 0
+          m_Value1: 0
+        Name: 
+        m_Value: 0
+    - rid: 8095726435397534710
+      type: {class: ActionNodeModel, ns: Unity.Behavior, asm: Unity.Behavior.Authoring}
+      data:
+        Position: {x: 78.28115, y: 244.61562}
+        ID:
+          m_Value0: 11563566754009721743
+          m_Value1: 14853484646806266440
+        Parents:
+        - rid: 8095726436717953091
+        PortModels:
+        - rid: 8095726435397534711
+        - rid: 8095726435397534712
+        NodeType:
+          m_SerializableType: FindClosestBerryPileAction, Assembly-CSharp, Version=0.0.0.0,
+            Culture=neutral, PublicKeyToken=null
+        NodeTypeID:
+          m_Value0: 5554548041219090039
+          m_Value1: 11379855387738914890
+        m_FieldValues:
+        - rid: 8095726436717953212
+        - rid: 8095726436717953213
+    - rid: 8095726435397534711
+      type: {class: PortModel, ns: Unity.Behavior.GraphFramework, asm: Unity.Behavior.GraphFramework}
+      data:
+        m_Name: InputPort
+        m_PortDataFlowType: 0
+        m_IsFloating: 0
+        m_NodeModel:
+          rid: 8095726435397534710
+        m_Connections: []
+    - rid: 8095726435397534712
+      type: {class: PortModel, ns: Unity.Behavior.GraphFramework, asm: Unity.Behavior.GraphFramework}
+      data:
+        m_Name: OutputPort
+        m_PortDataFlowType: 1
+        m_IsFloating: 0
+        m_NodeModel:
+          rid: 8095726435397534710
+        m_Connections: []
+    - rid: 8095726436717953088
+      type: {class: ActionNodeModel, ns: Unity.Behavior, asm: Unity.Behavior.Authoring}
+      data:
+        Position: {x: 89.24027, y: 248.9081}
+        ID:
+          m_Value0: 8314954892420106649
+          m_Value1: 10698457866868168418
+        Parents:
+        - rid: 8095726436717953091
+        PortModels:
+        - rid: 8095726436717953089
+        - rid: 8095726436717953090
+        NodeType:
+          m_SerializableType: WalkToPileAction, Assembly-CSharp, Version=0.0.0.0,
+            Culture=neutral, PublicKeyToken=null
+        NodeTypeID:
+          m_Value0: 2684395710
+          m_Value1: 0
+        m_FieldValues:
+        - rid: 8095726436717953174
+        - rid: 8095726436717953175
+    - rid: 8095726436717953089
+      type: {class: PortModel, ns: Unity.Behavior.GraphFramework, asm: Unity.Behavior.GraphFramework}
+      data:
+        m_Name: InputPort
+        m_PortDataFlowType: 0
+        m_IsFloating: 0
+        m_NodeModel:
+          rid: 8095726436717953088
+        m_Connections: []
+    - rid: 8095726436717953090
+      type: {class: PortModel, ns: Unity.Behavior.GraphFramework, asm: Unity.Behavior.GraphFramework}
+      data:
+        m_Name: OutputPort
+        m_PortDataFlowType: 1
+        m_IsFloating: 0
+        m_NodeModel:
+          rid: 8095726436717953088
+        m_Connections: []
+    - rid: 8095726436717953091
+      type: {class: SequenceNodeModel, ns: Unity.Behavior.GraphFramework, asm: Unity.Behavior.GraphFramework}
+      data:
+        Position: {x: 78.28115, y: 244.61562}
+        ID:
+          m_Value0: 9046024660509963307
+          m_Value1: 197874947760723250
+        Parents: []
+        PortModels:
+        - rid: 8095726436717953092
+        - rid: 8095726436717953093
+        Nodes:
+        - rid: 8095726435397534710
+        - rid: 8095726436717953088
+    - rid: 8095726436717953092
+      type: {class: PortModel, ns: Unity.Behavior.GraphFramework, asm: Unity.Behavior.GraphFramework}
+      data:
+        m_Name: InputPort
+        m_PortDataFlowType: 0
+        m_IsFloating: 0
+        m_NodeModel:
+          rid: 8095726436717953091
+        m_Connections:
+        - rid: 8095726435397534322
+    - rid: 8095726436717953093
+      type: {class: PortModel, ns: Unity.Behavior.GraphFramework, asm: Unity.Behavior.GraphFramework}
+      data:
+        m_Name: OutputPort
+        m_PortDataFlowType: 1
+        m_IsFloating: 0
+        m_NodeModel:
+          rid: 8095726436717953091
+        m_Connections: []
+    - rid: 8095726436717953174
+      type: {class: BehaviorGraphNodeModel/FieldModel, ns: Unity.Behavior, asm: Unity.Behavior.Authoring}
+      data:
+        FieldName: bearRef
+        Type:
+          m_SerializableType: BabyBearBehaviour, Assembly-CSharp, Version=0.0.0.0,
+            Culture=neutral, PublicKeyToken=null
+        LocalValue:
+          rid: 8095726436717953176
+        LinkedVariable:
+          rid: 8095726436717953178
+    - rid: 8095726436717953175
+      type: {class: BehaviorGraphNodeModel/FieldModel, ns: Unity.Behavior, asm: Unity.Behavior.Authoring}
+      data:
+        FieldName: targetPile
+        Type:
+          m_SerializableType: BerryPile, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+            PublicKeyToken=null
+        LocalValue:
+          rid: 8095726436717953177
+        LinkedVariable:
+          rid: 8095726436717953195
+    - rid: 8095726436717953176
+      type: {class: 'BlackboardVariable`1[[BabyBearBehaviour, Assembly-CSharp]]', ns: Unity.Behavior, asm: Unity.Behavior}
+      data:
+        GUID:
+          m_Value0: 0
+          m_Value1: 0
+        Name: 
+        m_Value: {fileID: 0}
+    - rid: 8095726436717953177
+      type: {class: 'BlackboardVariable`1[[BerryPile, Assembly-CSharp]]', ns: Unity.Behavior, asm: Unity.Behavior}
+      data:
+        GUID:
+          m_Value0: 0
+          m_Value1: 0
+        Name: 
+        m_Value: {fileID: 0}
+    - rid: 8095726436717953178
+      type: {class: 'TypedVariableModel`1[[BabyBearBehaviour, Assembly-CSharp]]', ns: Unity.Behavior.GraphFramework, asm: Unity.Behavior.GraphFramework}
+      data:
+        ID:
+          m_Value0: 2941018089043878999
+          m_Value1: 11092761706046657809
+        Name: bearRef
+        IsExposed: 1
+        m_IsShared: 0
+        m_Value: {fileID: 0}
+    - rid: 8095726436717953195
+      type: {class: 'TypedVariableModel`1[[BerryPile, Assembly-CSharp]]', ns: Unity.Behavior.GraphFramework, asm: Unity.Behavior.GraphFramework}
+      data:
+        ID:
+          m_Value0: 13804736833538464525
+          m_Value1: 14943211907403898628
+        Name: targetPile
+        IsExposed: 1
+        m_IsShared: 0
+        m_Value: {fileID: 0}
+    - rid: 8095726436717953212
+      type: {class: BehaviorGraphNodeModel/FieldModel, ns: Unity.Behavior, asm: Unity.Behavior.Authoring}
+      data:
+        FieldName: targetPile
+        Type:
+          m_SerializableType: BerryPile, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+            PublicKeyToken=null
+        LocalValue:
+          rid: 8095726436717953214
+        LinkedVariable:
+          rid: 8095726436717953249
+    - rid: 8095726436717953213
+      type: {class: BehaviorGraphNodeModel/FieldModel, ns: Unity.Behavior, asm: Unity.Behavior.Authoring}
+      data:
+        FieldName: bearRef
+        Type:
+          m_SerializableType: BabyBearBehaviour, Assembly-CSharp, Version=0.0.0.0,
+            Culture=neutral, PublicKeyToken=null
+        LocalValue:
+          rid: 8095726436717953215
+        LinkedVariable:
+          rid: 8095726436717953216
+    - rid: 8095726436717953214
+      type: {class: 'BlackboardVariable`1[[BerryPile, Assembly-CSharp]]', ns: Unity.Behavior, asm: Unity.Behavior}
+      data:
+        GUID:
+          m_Value0: 0
+          m_Value1: 0
+        Name: 
+        m_Value: {fileID: 0}
+    - rid: 8095726436717953215
+      type: {class: 'BlackboardVariable`1[[BabyBearBehaviour, Assembly-CSharp]]', ns: Unity.Behavior, asm: Unity.Behavior}
+      data:
+        GUID:
+          m_Value0: 0
+          m_Value1: 0
+        Name: 
+        m_Value: {fileID: 0}
+    - rid: 8095726436717953216
+      type: {class: 'TypedVariableModel`1[[BabyBearBehaviour, Assembly-CSharp]]', ns: Unity.Behavior.GraphFramework, asm: Unity.Behavior.GraphFramework}
+      data:
+        ID:
+          m_Value0: 2941018089043878999
+          m_Value1: 11092761706046657809
+        Name: bearRef
+        IsExposed: 1
+        m_IsShared: 0
+        m_Value: {fileID: 0}
+    - rid: 8095726436717953249
+      type: {class: 'TypedVariableModel`1[[BerryPile, Assembly-CSharp]]', ns: Unity.Behavior.GraphFramework, asm: Unity.Behavior.GraphFramework}
+      data:
+        ID:
+          m_Value0: 13804736833538464525
+          m_Value1: 14943211907403898628
+        Name: targetPile
+        IsExposed: 1
+        m_IsShared: 0
+        m_Value: {fileID: 0}

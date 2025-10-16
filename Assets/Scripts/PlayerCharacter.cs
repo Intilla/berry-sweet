@@ -3,6 +3,8 @@ using UnityEngine.InputSystem;
 using UnityEngine.Events;
 using UnityEngine.UI;
 using System.Collections;
+using UnityEngine.SceneManagement;
+
 
 [RequireComponent(typeof(Animator), typeof(SpriteRenderer), typeof(AudioSource))]
 public class PlayerCharacter : MonoBehaviour
@@ -57,6 +59,9 @@ public class PlayerCharacter : MonoBehaviour
     public int maxLives = 3;
     public int lives = 3;
     public UnityEvent<int> OnLivesChanged = new UnityEvent<int>();
+
+
+    [SerializeField] private GameObject deathCanvas;
 
     void Awake()
     {
@@ -122,7 +127,14 @@ public class PlayerCharacter : MonoBehaviour
         if (hurtSound && audioSource)
             audioSource.PlayOneShot(hurtSound);
 
-        Debug.Log($"Player took damage! Lives left: {lives}");
+         if (berriesCarried > 0)
+    {
+        berriesCarried = 0;
+        OnBerriesChanged.Invoke(berriesCarried);
+
+        if (loseBasketSound && audioSource)
+            audioSource.PlayOneShot(loseBasketSound);
+    }
 
         if (lives <= 0)
             OnPlayerDeath();
@@ -136,15 +148,36 @@ public class PlayerCharacter : MonoBehaviour
 
         if (healSound && audioSource)
             audioSource.PlayOneShot(healSound);
-
-        Debug.Log($"Gained a life! Lives: {lives}/{maxLives}");
     }
 
-    void OnPlayerDeath()
+void OnPlayerDeath()
+{
+    StartCoroutine(ShowDeathCanvasAfterDelay(1.5f));
+}
+
+IEnumerator ShowDeathCanvasAfterDelay(float delay)
+{
+    if (TryGetComponent<Rigidbody2D>(out var rb))
     {
-        Debug.Log("Player has died!");
-        // TODO: Add respawn, game over screen, etc.
+        rb.linearVelocity = Vector2.zero;
+        rb.constraints = RigidbodyConstraints2D.FreezeAll;
     }
+
+    if (playerInput)
+        playerInput.enabled = false;
+
+    if (animator)
+        animator.SetBool("IsMoving", false);
+
+    yield return new WaitForSeconds(delay);
+
+    if (deathCanvas)
+    {
+        deathCanvas.SetActive(true);
+    }
+}
+
+
 
     void HandleStamina(bool isMoving)
     {
@@ -206,8 +239,6 @@ public class PlayerCharacter : MonoBehaviour
         OnBerriesChanged.Invoke(0);
         berriesCarried = 0;
 
-        Debug.Log($"Added {pendingBerriesToSell} berries to pending sale");
-
         if (sellingCoroutine == null)
             sellingCoroutine = StartCoroutine(SellBerriesDelayed());
     }
@@ -242,6 +273,11 @@ public class PlayerCharacter : MonoBehaviour
 
             PlayerPrefs.SetInt("LastMoney", totalCoins);
             PlayerPrefs.Save();
+
+            PlayerPrefs.SetInt("ScoreSubmitted", 0); 
+            PlayerPrefs.Save();
+
+
 
             if (sellSound && audioSource)
                 audioSource.PlayOneShot(sellSound);

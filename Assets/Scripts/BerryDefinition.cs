@@ -1,4 +1,3 @@
-// BerryDefinition.cs
 using UnityEngine;
 
 [CreateAssetMenu(menuName="Berries/Berry Definition")]

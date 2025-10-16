@@ -1,5 +1,6 @@
 {
   "dependencies": {
+    "com.unity.behavior": "1.0.12",
     "com.unity.feature.2d": "2.0.1",
     "com.unity.inputsystem": "1.14.2",
     "com.unity.render-pipelines.universal": "17.2.0",

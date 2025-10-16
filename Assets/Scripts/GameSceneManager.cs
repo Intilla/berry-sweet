@@ -17,14 +17,12 @@ public class GameSceneManager : MonoBehaviour
             I = this;
         else
             Destroy(gameObject);
-
-        DontDestroyOnLoad(gameObject);
     }
 
     public void LoadMenu()
     {
         SceneManager.LoadScene(mainMenuScene);
-        Time.timeScale = 1f; 
+        Time.timeScale = 1f;
     }
 
     public void StartGame()

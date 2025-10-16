@@ -106,18 +106,24 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::MotherBearBehaviour
   idleSprite: {fileID: -1961102712, guid: 43e12786a0b515940a2aacbaf3da9048, type: 3}
   roarSprite: {fileID: -17334719, guid: 43e12786a0b515940a2aacbaf3da9048, type: 3}
-  walkSprite: {fileID: 1510391828, guid: 43e12786a0b515940a2aacbaf3da9048, type: 3}
+  walkSprites:
+  - {fileID: -1961102712, guid: 43e12786a0b515940a2aacbaf3da9048, type: 3}
+  - {fileID: 1510391828, guid: 43e12786a0b515940a2aacbaf3da9048, type: 3}
+  - {fileID: -1961102712, guid: 43e12786a0b515940a2aacbaf3da9048, type: 3}
+  - {fileID: -982552452, guid: 43e12786a0b515940a2aacbaf3da9048, type: 3}
   attackSprite: {fileID: 179815027, guid: 43e12786a0b515940a2aacbaf3da9048, type: 3}
   afterAttackSprite: {fileID: -876460496, guid: 43e12786a0b515940a2aacbaf3da9048, type: 3}
   roarSound: {fileID: 8300000, guid: 9a114ab511bf1ff40ab5c074a8bb7199, type: 3}
   stepSound: {fileID: 8300000, guid: 0b9dff2a915c9fc4f9f14f2d426eb537, type: 3}
   attackSound: {fileID: 8300000, guid: cd2ed870039cd104bac595a8cfdaaeec, type: 3}
   stepSoundInterval: 0.5
+  walkFrameRate: 0.15
   roarDuration: 1.5
   chaseSpeed: 3.5
   stopChaseDistance: 0.8
   attackCooldown: 1.2
   afterAttackDuration: 2
+  afterCalmDownDuration: 2
   playerTag: Player
   playerInBaseZone: 0
 --- !u!82 &3497650487330590401

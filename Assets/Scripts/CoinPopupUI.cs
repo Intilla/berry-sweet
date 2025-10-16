@@ -44,10 +44,8 @@ public void ShowPopup(string message)
             t += Time.deltaTime;
             float normalized = t / duration;
 
-            // fade in then fade out
             canvasGroup.alpha = normalized < 0.5f ? normalized * 2f : (1f - normalized) * 2f;
 
-            // float upward
             transform.localPosition = startPos + Vector3.up * (floatDistance * normalized);
 
             yield return null;

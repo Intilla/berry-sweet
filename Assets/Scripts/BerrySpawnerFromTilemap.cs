@@ -25,6 +25,8 @@ public class BerrySpawnerFromTilemap : MonoBehaviour
     public Vector2 blueberryRespawn = new Vector2(10f, 18f);
     public Vector2 lingonRespawn    = new Vector2(6f, 12f);
 
+[Header("Spawn offset")]
+public float yOffset = 0.1f;
     public float zOffset = -0.02f;
     public int randomSeed = 0;
 
@@ -66,8 +68,6 @@ public class BerrySpawnerFromTilemap : MonoBehaviour
 
         for (int i = 0; i < Mathf.Min(lingonCount, lgCells.Count); i++)
             CreatePileAt(lgCells[i], "lingon", lingonRange);
-
-        Debug.Log($"Spawned blue={Mathf.Min(blueberryCount, bbCells.Count)}, lingon={Mathf.Min(lingonCount, lgCells.Count)}");
     }
 
     void CreatePileAt(Vector3Int cell, string typeId, Vector2Int range)
@@ -76,6 +76,7 @@ public class BerrySpawnerFromTilemap : MonoBehaviour
         occupied.Add(cell);
 
         Vector3 world = bushesTilemap.GetCellCenterWorld(cell);
+        world.y += yOffset;
         world.z += zOffset;
 
         var go = Instantiate(berryPilePrefab, world, Quaternion.identity, transform);

@@ -4,8 +4,8 @@ using UnityEngine.UI;
 public class UIImageAnimator : MonoBehaviour
 {
     [Header("Animation Frames")]
-    public Sprite[] frames;       // coin_0 → coin_3
-    public float frameRate = 8f;  // frames per second
+    public Sprite[] frames;
+    public float frameRate = 8f;
 
     private Image image;
     private int currentFrame;
