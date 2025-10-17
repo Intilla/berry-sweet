@@ -89,9 +89,10 @@ public class HighscoreManager : MonoBehaviour
 
         ScoreEntry entry = new ScoreEntry(playerName, money);
         string json = JsonUtility.ToJson(entry);
-        string url = baseUrl + "save.php?key=" + secretKey;
+string url = baseUrl + "save.php";
+UnityWebRequest www = new UnityWebRequest(url, "POST");
+www.SetRequestHeader("Authorization", secretKey);
 
-        UnityWebRequest www = new UnityWebRequest(url, "POST");
         byte[] bodyRaw = Encoding.UTF8.GetBytes(json);
         www.uploadHandler = new UploadHandlerRaw(bodyRaw);
         www.downloadHandler = new DownloadHandlerBuffer();
